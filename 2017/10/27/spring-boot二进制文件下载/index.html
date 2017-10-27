@@ -6,14 +6,14 @@
   <title>spring-boot二进制文件下载 | 技术栈</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="小编最近在Web项目中，需要完成一个excel文件导入和导出的功能。导入没有什么问题，但是导出折腾了小编半天时间。spring-boot在这里有个坑，谁踩谁知道啊！不说废话，先看spring-boot下载功能的实现代码。为了代码复用，我将上传和下载对应的功能，放在了一个抽象的Controller类中，需要该功能的controller可以直接集成这个类，并且实现两个abstract的方法即可。123">
-<meta name="keywords" content="spring-boot, 文件下载">
+<meta name="keywords" content="spring-boot,文件下载">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring-boot二进制文件下载">
 <meta property="og:url" content="https://root-fang.github.io/2017/10/27/spring-boot二进制文件下载/index.html">
 <meta property="og:site_name" content="技术栈">
 <meta property="og:description" content="小编最近在Web项目中，需要完成一个excel文件导入和导出的功能。导入没有什么问题，但是导出折腾了小编半天时间。spring-boot在这里有个坑，谁踩谁知道啊！不说废话，先看spring-boot下载功能的实现代码。为了代码复用，我将上传和下载对应的功能，放在了一个抽象的Controller类中，需要该功能的controller可以直接集成这个类，并且实现两个abstract的方法即可。123">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-27T06:52:37.312Z">
+<meta property="og:updated_time" content="2017-10-27T07:06:10.791Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring-boot二进制文件下载">
 <meta name="twitter:description" content="小编最近在Web项目中，需要完成一个excel文件导入和导出的功能。导入没有什么问题，但是导出折腾了小编半天时间。spring-boot在这里有个坑，谁踩谁知道啊！不说废话，先看spring-boot下载功能的实现代码。为了代码复用，我将上传和下载对应的功能，放在了一个抽象的Controller类中，需要该功能的controller可以直接集成这个类，并且实现两个abstract的方法即可。123">
@@ -56,7 +56,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://root-fang.github.io"></form>
@@ -94,10 +94,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://root-fang.github.io/2017/10/27/spring-boot二进制文件下载/" data-id="cj99jxmll0000i4k7fe4g1jrj" class="article-share-link">Share</a>
+      <a data-url="https://root-fang.github.io/2017/10/27/spring-boot二进制文件下载/" data-id="cj99k0u0l0003bgk72xv8o6w3" class="article-share-link">Delen</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-boot-文件下载/">spring-boot, 文件下载</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-boot/">spring-boot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文件下载/">文件下载</a></li></ul>
 
     </footer>
   </div>
@@ -106,7 +106,7 @@
 <nav id="article-nav">
   
     <a href="/2017/10/27/spring-boot中jpa使用心得/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
+      <strong class="article-nav-caption">Nieuwer</strong>
       <div class="article-nav-title">
         
           spring-boot中jpa使用心得
@@ -116,7 +116,7 @@
   
   
     <a href="/2017/10/27/netty中引入spring-boot/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ouder</strong>
       <div class="article-nav-title">netty中引入spring-boot</div>
     </a>
   
@@ -134,9 +134,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Labels</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty-spring-boot/">netty, spring-boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot-jpa/">spring-boot, jpa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot-文件下载/">spring-boot, 文件下载</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot/">spring-boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件下载/">文件下载</a></li></ul>
     </div>
   </div>
 
@@ -146,14 +146,14 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/netty-spring-boot/" style="font-size: 10px;">netty, spring-boot</a> <a href="/tags/spring-boot-jpa/" style="font-size: 10px;">spring-boot, jpa</a> <a href="/tags/spring-boot-文件下载/" style="font-size: 10px;">spring-boot, 文件下载</a>
+      <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/spring-boot/" style="font-size: 20px;">spring-boot</a> <a href="/tags/文件下载/" style="font-size: 10px;">文件下载</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
     </div>
@@ -163,7 +163,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
