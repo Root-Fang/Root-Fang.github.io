@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="技术栈">
 <meta property="og:description" content="netty是Java世界中高并发的框架，号称单台物理机能够支撑100万并发连接，是Java世界中高性能并发的不二之选。不过，跟spring-boot相比，其开发有点偏于底层，写起来没有spring-boot那么爽快，开发的效率不高。我的一个项目中，有高并发的需求，单靠spring-boot自带的tomcat无法满足性能上的要求。因此，我选择netty，作为底层框架。为了能够提高开发效率，我尝试将s">
 <meta property="og:locale" content="cn">
-<meta property="og:updated_time" content="2017-10-27T06:42:45.600Z">
+<meta property="og:updated_time" content="2017-10-27T06:51:16.299Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="netty中引入spring-boot">
 <meta name="twitter:description" content="netty是Java世界中高并发的框架，号称单台物理机能够支撑100万并发连接，是Java世界中高性能并发的不二之选。不过，跟spring-boot相比，其开发有点偏于底层，写起来没有spring-boot那么爽快，开发的效率不高。我的一个项目中，有高并发的需求，单靠spring-boot自带的tomcat无法满足性能上的要求。因此，我选择netty，作为底层框架。为了能够提高开发效率，我尝试将s">
@@ -103,13 +103,14 @@
 </blockquote>
 <p>上述代码中，我将server设置为线程，这样是为了能在一个程序中，同时监听多个端口。最后是整个程序的入口，使用ApplicationContext来获取server的bean，并使用ExecutorService 来启动server对应的线程。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDNRouterServer</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Logger logger = LoggerFactory.getLogger(CDNRouterServer.class);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        ApplicationContext ctx = SpringApplication.run(CDNRouterServer.class, args);</div><div class="line">        ExecutorService service = Executors.newCachedThreadPool();</div><div class="line">        OpsHttpServer server = ctx.getBean(<span class="string">"opsHttpServer"</span>, OpsHttpServer.class);</div><div class="line">        service.execute(server);</div><div class="line">        service.shutdown();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <blockquote>
-<p>引入Spring-boot后，我们就可以很方便的引入spring-data-jpa来做数据库的访问了，而不需要再手动得写JDBC的程序，极大简化了数据库的访问。<br><strong>ps</strong>: 小编是从python路转java的，念念不忘python世界中的sqlalchemy和Django中的ORM，实在是无法忍受jdbc写sql语句。得亏还有个jpa，虽然我个人认为jpa绝对无法跟sqlalchemy相比，但是有胜于无嘛，况且写起来也还是挺方便的。虽然，总觉得它缺胳膊少腿的……</p>
+<p>引入Spring-boot后，我们就可以很方便的引入spring-data-jpa来做数据库的访问了，而不需要再手动得写JDBC的程序，极大简化了数据库的访问。</p>
+<p><strong>ps</strong>: 小编是从python路转java的，念念不忘python世界中的sqlalchemy和Django中的ORM，实在是无法忍受jdbc写sql语句。得亏还有个jpa，虽然我个人认为jpa绝对无法跟sqlalchemy相比，但是有胜于无嘛，况且写起来也还是挺方便的。虽然，总觉得它缺胳膊少腿的……</p>
 </blockquote>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://root-fang.github.io/2017/10/27/netty中引入spring-boot/" data-id="cj99j92ni0000b0k7m8l5nd7x" class="article-share-link">Partager</a>
+      <a data-url="https://root-fang.github.io/2017/10/27/netty中引入spring-boot/" data-id="cj99jmfz80000gwk72qrvmefi" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/netty-spring-boot/">netty, spring-boot</a></li></ul>
@@ -118,6 +119,20 @@
   </div>
   
     
+<nav id="article-nav">
+  
+    <a href="/2017/10/27/spring-boot二进制文件下载/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          spring-boot二进制文件下载
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
   
 </article>
 
@@ -132,7 +147,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty-spring-boot/">netty, spring-boot</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty-spring-boot/">netty, spring-boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot-jpa/">spring-boot, jpa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot-文件下载/">spring-boot, 文件下载</a></li></ul>
     </div>
   </div>
 
@@ -142,7 +157,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/netty-spring-boot/" style="font-size: 10px;">netty, spring-boot</a>
+      <a href="/tags/netty-spring-boot/" style="font-size: 10px;">netty, spring-boot</a> <a href="/tags/spring-boot-jpa/" style="font-size: 10px;">spring-boot, jpa</a> <a href="/tags/spring-boot-文件下载/" style="font-size: 10px;">spring-boot, 文件下载</a>
     </div>
   </div>
 
@@ -162,6 +177,14 @@
     <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/10/27/spring-boot中jpa使用心得/">spring-boot中jpa使用心得</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/27/spring-boot二进制文件下载/">spring-boot二进制文件下载</a>
+          </li>
         
           <li>
             <a href="/2017/10/27/netty中引入spring-boot/">netty中引入spring-boot</a>

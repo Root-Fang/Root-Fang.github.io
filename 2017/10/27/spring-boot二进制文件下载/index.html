@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>spring-boot二进制文件下载 | 技术栈</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="小编最近在Web项目中，需要完成一个excel文件导入和导出的功能。导入没有什么问题，但是导出折腾了小编半天时间。spring-boot在这里有个坑，谁踩谁知道啊！不说废话，先看spring-boot下载功能的实现代码。为了代码复用，我将上传和下载对应的功能，放在了一个抽象的Controller类中，需要该功能的controller可以直接集成这个类，并且实现两个abstract的方法即可。123">
+<meta name="keywords" content="spring-boot, 文件下载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring-boot二进制文件下载">
+<meta property="og:url" content="https://root-fang.github.io/2017/10/27/spring-boot二进制文件下载/index.html">
+<meta property="og:site_name" content="技术栈">
+<meta property="og:description" content="小编最近在Web项目中，需要完成一个excel文件导入和导出的功能。导入没有什么问题，但是导出折腾了小编半天时间。spring-boot在这里有个坑，谁踩谁知道啊！不说废话，先看spring-boot下载功能的实现代码。为了代码复用，我将上传和下载对应的功能，放在了一个抽象的Controller类中，需要该功能的controller可以直接集成这个类，并且实现两个abstract的方法即可。123">
+<meta property="og:locale" content="cn">
+<meta property="og:updated_time" content="2017-10-27T06:52:37.312Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring-boot二进制文件下载">
+<meta name="twitter:description" content="小编最近在Web项目中，需要完成一个excel文件导入和导出的功能。导入没有什么问题，但是导出折腾了小编半天时间。spring-boot在这里有个坑，谁踩谁知道啊！不说废话，先看spring-boot下载功能的实现代码。为了代码复用，我将上传和下载对应的功能，放在了一个抽象的Controller类中，需要该功能的controller可以直接集成这个类，并且实现两个abstract的方法即可。123">
+  
+    <link rel="alternate" href="/atom.xml" title="技术栈" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">技术栈</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://root-fang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-spring-boot二进制文件下载" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/27/spring-boot二进制文件下载/" class="article-date">
+  <time datetime="2017-10-27T06:52:05.000Z" itemprop="datePublished">2017-10-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      spring-boot二进制文件下载
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>小编最近在Web项目中，需要完成一个excel文件导入和导出的功能。导入没有什么问题，但是导出折腾了小编半天时间。spring-boot在这里有个坑，谁踩谁知道啊！不说废话，先看spring-boot下载功能的实现代码。为了代码复用，我将上传和下载对应的功能，放在了一个抽象的Controller类中，需要该功能的controller可以直接集成这个类，并且实现两个abstract的方法即可。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line">	<span class="keyword">abstract</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UploadAndDownloadController</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(UploadAndDownloadController.class);</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Download response entity.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> id the id</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the response entity</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/download"</span>, method = RequestMethod.GET)</div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="keyword">public</span> ResponseEntity&lt;<span class="keyword">byte</span>[]&gt; download(<span class="meta">@RequestParam</span>(value = <span class="string">"id"</span>, required = <span class="keyword">false</span>) List&lt;String&gt; id) &#123;</div><div class="line">        File file = generate(parseId(id));</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">return</span> ControllerUtil.createBytesResponse(<span class="string">"download.xls"</span>, file);</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            logger.error(<span class="string">"文件下载失败"</span>, e);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            file.delete();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Upload response entity.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> file the file</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the response entity</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/upload"</span>, method = RequestMethod.POST)</div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ResponseEntity&lt;JSONObject&gt; <span class="title">upload</span><span class="params">(@RequestParam(<span class="string">"file"</span>)</span> MultipartFile file) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!file.isEmpty()) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                introduce(file.getInputStream());</div><div class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                logger.error(<span class="string">"文件导入失败"</span>, e);</div><div class="line">                <span class="keyword">return</span> ControllerUtil.createFileUploadFailureResponse(<span class="string">"文件导入失败"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> ControllerUtil.createFileUploadSuccessResponse();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Generate file.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> id the id</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> the file</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> File <span class="title">generate</span><span class="params">(List&lt;Long&gt; id)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Introduce.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> in the in</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">introduce</span><span class="params">(InputStream in)</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> File <span class="title">getTemplateFile</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> List&lt;Long&gt; <span class="title">parseId</span><span class="params">(List&lt;String&gt; id)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (id == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> id.stream().filter(s -&gt; &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                Long.parseLong(s);</div><div class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;).map(Long::parseLong).collect(Collectors.toList());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接下来，才是最重要的一步，没有下面的设置，上面的下载功能就是废的，下载下来的二进制文件全是乱码。请看下面的代码。下面的代码扩展了WebMvcConfigurerAdapter，并添加了<strong>基于字节的http消息转换器</strong>(默认只有基于字符的http消息转换器，所以如果不加这个，下载后的二进制文件全是乱码)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomWebAppConfigurer</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configureMessageConverters</span><span class="params">(List&lt;HttpMessageConverter&lt;?&gt;&gt; converters)</span> </span>&#123;</div><div class="line">    <span class="comment">//此处是重点啊，亲们</span></div><div class="line">        converters.add(<span class="keyword">new</span> ByteArrayHttpMessageConverter());</div><div class="line">        <span class="keyword">super</span>.configureMessageConverters(converters);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://root-fang.github.io/2017/10/27/spring-boot二进制文件下载/" data-id="cj99jmfzs0006gwk723b41m0p" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-boot-文件下载/">spring-boot, 文件下载</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/10/27/spring-boot中jpa使用心得/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          spring-boot中jpa使用心得
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/10/27/netty中引入spring-boot/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">netty中引入spring-boot</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty-spring-boot/">netty, spring-boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot-jpa/">spring-boot, jpa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot-文件下载/">spring-boot, 文件下载</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/netty-spring-boot/" style="font-size: 10px;">netty, spring-boot</a> <a href="/tags/spring-boot-jpa/" style="font-size: 10px;">spring-boot, jpa</a> <a href="/tags/spring-boot-文件下载/" style="font-size: 10px;">spring-boot, 文件下载</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/10/27/spring-boot中jpa使用心得/">spring-boot中jpa使用心得</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/27/spring-boot二进制文件下载/">spring-boot二进制文件下载</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/27/netty中引入spring-boot/">netty中引入spring-boot</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Derek Fang<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
