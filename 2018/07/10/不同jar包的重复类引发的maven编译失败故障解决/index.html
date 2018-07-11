@@ -16,7 +16,7 @@
 <meta property="og:description" content="我在开发过程中，碰到了这样奇葩的问题，有一个类ResultInfo，出现在了3个不同的jar中，而且路径也是完全相同的，这三个jar都为工程所必须，这个问题导致maven编译失败，提示如下图所示：  事实上，3个jar包中，其中一个jar包的ResultInfo不包含方法isSuccess，而另外的是包含的，碰巧的就是maven在编译过程中，使用了这个不包含方法isSuccess的jar包，因此导">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://root-fang.github.io/2018/07/10/不同jar包的重复类引发的maven编译失败故障解决/ResultInfo.png">
-<meta property="og:updated_time" content="2018-07-11T02:04:33.759Z">
+<meta property="og:updated_time" content="2018-07-11T02:36:27.914Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不同jar包的重复类引发的maven编译失败故障解决">
 <meta name="twitter:description" content="我在开发过程中，碰到了这样奇葩的问题，有一个类ResultInfo，出现在了3个不同的jar中，而且路径也是完全相同的，这三个jar都为工程所必须，这个问题导致maven编译失败，提示如下图所示：  事实上，3个jar包中，其中一个jar包的ResultInfo不包含方法isSuccess，而另外的是包含的，碰巧的就是maven在编译过程中，使用了这个不包含方法isSuccess的jar包，因此导">
@@ -92,7 +92,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>我在开发过程中，碰到了这样奇葩的问题，有一个类<code>ResultInfo</code>，出现在了3个不同的jar中，而且路径也是完全相同的，这三个jar都为工程所必须，这个问题导致maven编译失败，提示如下图所示：</p>
-<p><img src="ResultInfo.png" alt=""></p>
+<img src="/2018/07/10/不同jar包的重复类引发的maven编译失败故障解决/ResultInfo.png" alt="ResultInfo.png" title="">
 <p>事实上，3个jar包中，其中一个jar包的<code>ResultInfo</code>不包含方法<code>isSuccess</code>，而另外的是包含的，碰巧的就是maven在编译过程中，使用了这个不包含方法<code>isSuccess</code>的jar包，因此导致了编译错误。</p>
 <p>网上搜索了一些资料后，大致找到了产生错误的原因：<strong>java会根据classpath设置的属性，进行类加载， 如果同名同路径的类，前面的优先加载，一旦前面的被加载，后面的就在也不会被加载</strong>。因为我使用Maven进行打包，所以我需要找到方法，来控制maven加载依赖jar的顺序。</p>
 <p>后来在网上看到一篇<a href="https://blog.csdn.net/Jason20Ming/article/details/7192486" target="_blank" rel="external">文章</a>，解释maven的依赖加载顺序，按照文章的说法，maven自2.9(也可能是2.0.9)开始，对于<code>dependency</code>中<code>groupId</code>和<code>artifactId</code>相同，但是<code>version</code>不同的jar包，加载顺序(假定为compile依赖 )如下：</p>
@@ -112,7 +112,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://root-fang.github.io/2018/07/10/不同jar包的重复类引发的maven编译失败故障解决/" data-id="cjjghsju9000kdkhk6b9pyum2" class="article-share-link">Share</a>
+      <a data-url="https://root-fang.github.io/2018/07/10/不同jar包的重复类引发的maven编译失败故障解决/" data-id="cjjgik93d000jo4hke617vgya" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/maven/">maven</a></li></ul>
