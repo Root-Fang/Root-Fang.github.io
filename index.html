@@ -87,7 +87,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>我在开发过程中，碰到了这样奇葩的问题，有一个类<code>ResultInfo</code>，出现在了3个不同的jar中，而且路径也是完全相同的，这三个jar都为工程所必须，这个问题导致maven编译失败，提示如下图所示：</p>
-<img src="/2018/07/10/不同jar包的重复类引发的maven编译失败故障解决/ResultInfo.png" alt="ResultInfo.png" title="">
+<img src="/2018/07/10/不同jar包的重复类引发的maven编译失败故障解决/ResultInfo.png" alt="编译错误" title="编译错误">
 <p>事实上，3个jar包中，其中一个jar包的<code>ResultInfo</code>不包含方法<code>isSuccess</code>，而另外的是包含的，碰巧的就是maven在编译过程中，使用了这个不包含方法<code>isSuccess</code>的jar包，因此导致了编译错误。</p>
 <p>网上搜索了一些资料后，大致找到了产生错误的原因：<strong>java会根据classpath设置的属性，进行类加载， 如果同名同路径的类，前面的优先加载，一旦前面的被加载，后面的就在也不会被加载</strong>。因为我使用Maven进行打包，所以我需要找到方法，来控制maven加载依赖jar的顺序。</p>
 <p>后来在网上看到一篇<a href="https://blog.csdn.net/Jason20Ming/article/details/7192486" target="_blank" rel="external">文章</a>，解释maven的依赖加载顺序，按照文章的说法，maven自2.9(也可能是2.0.9)开始，对于<code>dependency</code>中<code>groupId</code>和<code>artifactId</code>相同，但是<code>version</code>不同的jar包，加载顺序(假定为compile依赖 )如下：</p>
@@ -107,7 +107,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://root-fang.github.io/2018/07/10/不同jar包的重复类引发的maven编译失败故障解决/" data-id="cjjgik93d000jo4hke617vgya" class="article-share-link">Share</a>
+      <a data-url="https://root-fang.github.io/2018/07/10/不同jar包的重复类引发的maven编译失败故障解决/" data-id="cjjginiw5000dd8hksc84ys0h" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/maven/">maven</a></li></ul>
@@ -172,7 +172,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://root-fang.github.io/2017/10/27/Scrapy配合Selenium和PhantomJS爬取动态网页/" data-id="cjjgik92x0001o4hkjve7trd0" class="article-share-link">Share</a>
+      <a data-url="https://root-fang.github.io/2017/10/27/Scrapy配合Selenium和PhantomJS爬取动态网页/" data-id="cjjginivq0000d8hktj3ilu8v" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PhantomJS/">PhantomJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scrapy/">Scrapy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
@@ -220,7 +220,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://root-fang.github.io/2017/10/27/spring-boot中jpa使用心得/" data-id="cjjgik92x0003o4hkzc6l2jjh" class="article-share-link">Share</a>
+      <a data-url="https://root-fang.github.io/2017/10/27/spring-boot中jpa使用心得/" data-id="cjjginiw5000ad8hk1m0p33k7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jpa/">jpa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-boot/">spring-boot</a></li></ul>
@@ -261,7 +261,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://root-fang.github.io/2017/10/27/spring-boot二进制文件下载/" data-id="cjjgik93s000oo4hk8v3ed4dw" class="article-share-link">Share</a>
+      <a data-url="https://root-fang.github.io/2017/10/27/spring-boot二进制文件下载/" data-id="cjjginiw5000cd8hkhe49kbmk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-boot/">spring-boot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文件下载/">文件下载</a></li></ul>
@@ -318,7 +318,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://root-fang.github.io/2017/10/27/netty中引入spring-boot/" data-id="cjjgik92x0000o4hkm4s0uv9f" class="article-share-link">Share</a>
+      <a data-url="https://root-fang.github.io/2017/10/27/netty中引入spring-boot/" data-id="cjjginiw50009d8hkhuj9qaa5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/netty/">netty</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-boot/">spring-boot</a></li></ul>
