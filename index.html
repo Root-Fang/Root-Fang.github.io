@@ -5,6 +5,7 @@
   
   <title>技术栈</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="google-site-verification" content="z58GPffiQL72EMNkaigef_l7sAey3I8Rpj5hyYjc9mA" />
   <meta property="og:type" content="website">
 <meta property="og:title" content="技术栈">
 <meta property="og:url" content="https://root-fang.github.io/index.html">
@@ -62,6 +63,61 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-不同jar包的重复类引发的maven编译失败故障解决" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/10/不同jar包的重复类引发的maven编译失败故障解决/" class="article-date">
+  <time datetime="2018-07-10T08:53:10.000Z" itemprop="datePublished">2018-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/10/不同jar包的重复类引发的maven编译失败故障解决/">不同jar包的重复类引发的maven编译失败故障解决</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我在开发过程中，碰到了这样奇葩的问题，有一个类<code>ResultInfo</code>，出现在了3个不同的jar中，而且路径也是完全相同的，这三个jar都为工程所必须，这个问题导致maven编译失败，提示如下图所示：</p>
+<p><img src="ResultInfo.png" alt=""></p>
+<p>事实上，3个jar包中，其中一个jar包的<code>ResultInfo</code>不包含方法<code>isSuccess</code>，而另外的是包含的，碰巧的就是maven在编译过程中，使用了这个不包含方法<code>isSuccess</code>的jar包，因此导致了编译错误。</p>
+<p>网上搜索了一些资料后，大致找到了产生错误的原因：<strong>java会根据classpath设置的属性，进行类加载， 如果同名同路径的类，前面的优先加载，一旦前面的被加载，后面的就在也不会被加载</strong>。因为我使用Maven进行打包，所以我需要找到方法，来控制maven加载依赖jar的顺序。</p>
+<p>后来在网上看到一篇<a href="https://blog.csdn.net/Jason20Ming/article/details/7192486" target="_blank" rel="external">文章</a>，解释maven的依赖加载顺序，按照文章的说法，maven自2.9(也可能是2.0.9)开始，对于<code>dependency</code>中<code>groupId</code>和<code>artifactId</code>相同，但是<code>version</code>不同的jar包，加载顺序(假定为compile依赖 )如下：</p>
+<ol>
+<li><p>依赖路径浅的优先：</p>
+<blockquote>
+<p>假设，A-&gt;B-&gt;slf4j:1.6.2，A-&gt;C-&gt;E-&gt;slf4j:1.4.1，则slf4j:1.6.2优先 </p>
+</blockquote>
+</li>
+<li><p>声明优先，如果在<code>dependencyManagement</code>中声明的话会优先采用对应插件 </p>
+</li>
+<li><p>覆写优先，子POM内声明的优先于父POM中的依赖 </p>
+</li>
+</ol>
+<p>参考上述的说法，虽然不完全一致(我的场景是完全不同的jar包)，我尝试将不包含方法<code>isSuccess</code>的jar包，放到的<code>dependencies</code>的最后，然后再重新调用maven编译，结果编译通过。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://root-fang.github.io/2018/07/10/不同jar包的重复类引发的maven编译失败故障解决/" data-id="cjjghizx5000394hkntg2p4bt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/maven/">maven</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Scrapy配合Selenium和PhantomJS爬取动态网页" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/10/27/Scrapy配合Selenium和PhantomJS爬取动态网页/" class="article-date">
@@ -115,7 +171,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://root-fang.github.io/2017/10/27/Scrapy配合Selenium和PhantomJS爬取动态网页/" data-id="cj99k5jkx0000i8k71w41b7fh" class="article-share-link">Share</a>
+      <a data-url="https://root-fang.github.io/2017/10/27/Scrapy配合Selenium和PhantomJS爬取动态网页/" data-id="cjjghizx5000194hk1kgg6jh6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PhantomJS/">PhantomJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scrapy/">Scrapy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
@@ -163,7 +219,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://root-fang.github.io/2017/10/27/spring-boot中jpa使用心得/" data-id="cj99k5jll000ji8k7meqq0883" class="article-share-link">Share</a>
+      <a data-url="https://root-fang.github.io/2017/10/27/spring-boot中jpa使用心得/" data-id="cjjghizx5000494hk47hxrl96" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jpa/">jpa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-boot/">spring-boot</a></li></ul>
@@ -204,7 +260,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://root-fang.github.io/2017/10/27/spring-boot二进制文件下载/" data-id="cj99k5jl10001i8k77zljcql6" class="article-share-link">Share</a>
+      <a data-url="https://root-fang.github.io/2017/10/27/spring-boot二进制文件下载/" data-id="cjjghizx5000594hkkhshax3s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-boot/">spring-boot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文件下载/">文件下载</a></li></ul>
@@ -261,7 +317,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://root-fang.github.io/2017/10/27/netty中引入spring-boot/" data-id="cj99k5jl60003i8k7mren2xw9" class="article-share-link">Share</a>
+      <a data-url="https://root-fang.github.io/2017/10/27/netty中引入spring-boot/" data-id="cjjghizwp000094hkt7q304ca" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/netty/">netty</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-boot/">spring-boot</a></li></ul>
@@ -285,7 +341,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PhantomJS/">PhantomJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot/">spring-boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件下载/">文件下载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PhantomJS/">PhantomJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy/">Scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot/">spring-boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件下载/">文件下载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
     </div>
   </div>
 
@@ -295,7 +351,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/PhantomJS/" style="font-size: 10px;">PhantomJS</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/spring-boot/" style="font-size: 20px;">spring-boot</a> <a href="/tags/文件下载/" style="font-size: 10px;">文件下载</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a>
+      <a href="/tags/PhantomJS/" style="font-size: 10px;">PhantomJS</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Scrapy/" style="font-size: 10px;">Scrapy</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/spring-boot/" style="font-size: 20px;">spring-boot</a> <a href="/tags/文件下载/" style="font-size: 10px;">文件下载</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a>
     </div>
   </div>
 
@@ -304,7 +360,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
     </div>
   </div>
 
@@ -315,6 +371,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/07/10/不同jar包的重复类引发的maven编译失败故障解决/">不同jar包的重复类引发的maven编译失败故障解决</a>
+          </li>
         
           <li>
             <a href="/2017/10/27/Scrapy配合Selenium和PhantomJS爬取动态网页/">Scrapy配合Selenium和PhantomJS爬取动态网页</a>
@@ -344,7 +404,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 Derek Fang<br>
+      &copy; 2018 Derek Fang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
